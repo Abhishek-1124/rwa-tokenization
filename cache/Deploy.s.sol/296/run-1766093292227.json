@@ -1,0 +1,16 @@
+{
+  "transactions": [
+    {
+      "rpc": "https://testnet.hashio.io/api"
+    },
+    {
+      "rpc": "https://testnet.hashio.io/api"
+    },
+    {
+      "rpc": "https://testnet.hashio.io/api"
+    },
+    {
+      "rpc": "https://testnet.hashio.io/api"
+    }
+  ]
+}

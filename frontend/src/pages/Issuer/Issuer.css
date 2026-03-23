@@ -1,0 +1,191 @@
+.issuer-page {
+  min-height: 100vh;
+}
+
+.issuer-header {
+  padding: var(--spacing-lg) 0;
+}
+
+.issuer-header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.issuer-logo {
+  font-weight: 700;
+  color: var(--color-gray-900);
+}
+
+.issuer-nav {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.issuer-link {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.issuer-main {
+  padding-bottom: var(--spacing-3xl);
+}
+
+.issuer-title {
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--color-gray-900);
+  margin: var(--spacing-xl) 0;
+}
+
+.issuer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-lg);
+}
+
+.issuer-card {
+  background: var(--color-white);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: var(--spacing-lg);
+}
+
+.issuer-card-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--color-gray-900);
+  margin-bottom: var(--spacing-md);
+}
+
+.issuer-help {
+  font-size: 13px;
+  color: var(--color-gray-600);
+  margin-bottom: var(--spacing-md);
+}
+
+.issuer-help code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  background: var(--color-gray-100);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.issuer-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-gray-600);
+  display: block;
+  margin-top: var(--spacing-sm);
+  margin-bottom: 6px;
+}
+
+.issuer-input {
+  width: 100%;
+  border: 1px solid var(--color-gray-200);
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  background: var(--color-white);
+}
+
+.issuer-btn {
+  margin-top: var(--spacing-md);
+  background: var(--color-gray-900);
+  color: var(--color-white);
+  padding: 10px 16px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+}
+
+.issuer-btn:hover:not(:disabled) {
+  background: var(--color-gray-800);
+  transform: translateY(-1px);
+}
+
+.issuer-btn.secondary {
+  background: transparent;
+  color: var(--color-gray-900);
+  border: 1px solid var(--color-gray-200);
+}
+
+.issuer-btn.secondary:hover:not(:disabled) {
+  background: var(--color-gray-100);
+}
+
+.issuer-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.issuer-warning {
+  margin-top: var(--spacing-md);
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  color: #92400e;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+}
+
+.issuer-error {
+  margin-top: var(--spacing-md);
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+}
+
+.issuer-msg {
+  margin-bottom: var(--spacing-md);
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+}
+
+.issuer-msg.success {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+}
+
+.issuer-msg.error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+.issuer-result {
+  background: var(--color-gray-100);
+  border: 1px solid var(--color-gray-200);
+  padding: 12px;
+  border-radius: var(--radius-md);
+  margin-top: var(--spacing-md);
+  font-size: 13px;
+}
+
+.issuer-result code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.issuer-note {
+  margin-top: var(--spacing-md);
+  font-size: 13px;
+  color: var(--color-gray-700);
+}
+
+@media (min-width: 960px) {
+  .issuer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .issuer-grid .issuer-card:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+
