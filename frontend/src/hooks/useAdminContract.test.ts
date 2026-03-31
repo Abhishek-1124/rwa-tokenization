@@ -1,37 +1,8 @@
-// Change this:
-let myVar: any;
-
-// To something more specific, e.g.:
-let myVar: string; // or the correct typeimport { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import { useAdminContract } from './useAdminContract';
 import { Contract } from 'ethers';
-import React from 'react';
-
-// Mock ethers Contract
-vi.mock('ethers', async () => {
-  const actual = await vi.importActual('ethers');
-  return {
-    ...actual,
-    Contract: vi.fn(),
-  };
-});
-
-// Mock the Web3Context
-const mockProvider = {
-  getSigner: vi.fn(),
-};
-
-const mockSigner = {
-  getAddress: vi.fn().mockResolvedValue('0x1234567890123456789012345678901234567890'),
-};
-
-vi.mock('../context/Web3Context', () => ({
-  useWallet: vi.fn(() => ({
-    provider: mockProvider,
-    signer: mockSigner,
-  })),
-}));
+// ...existing code...
 
 describe('useAdminContract', () => {
   const mockOwnerAddress = '0xOwnerAddress123';

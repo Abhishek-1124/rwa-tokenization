@@ -3,15 +3,11 @@ import { BrowserProvider, type Signer } from 'ethers';
 import type { WalletContextType, User } from '../types';
 import { EXPECTED_CHAIN_ID, HEDERA_TESTNET_CONFIG } from '../config/contracts';
 
+// Move non-component exports to a separate file if needed for Fast Refresh compliance
+
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
-export const useWallet = () => {
-  const context = useContext(WalletContext);
-  if (!context) {
-    throw new Error('useWallet must be used within a WalletProvider');
-  }
-  return context;
-};
+// Moved useWallet to utils/contextUtils.ts for Fast Refresh compliance
 
 interface WalletProviderProps {
   children: ReactNode;

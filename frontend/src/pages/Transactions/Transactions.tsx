@@ -32,7 +32,7 @@ const Transactions: React.FC = () => {
     }
   }, [isConnected, navigate]);
 
-  const loadMarketActivity = async () => {
+  const loadMarketActivity = React.useCallback(async () => {
     if (!addresses.marketplace) {
       setError('Marketplace address is not configured. Set it in Admin first.');
       return;
