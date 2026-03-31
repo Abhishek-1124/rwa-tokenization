@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
 import "forge-std/Test.sol";
@@ -27,9 +26,6 @@ contract AssetRegistryTest is Test {
         admin.addIssuer(issuer2);
     }
 
-    // =========================================================================
-    // Constructor Tests
-    // =========================================================================
 
     function testConstructorSetsAdminContract() public view {
         assertEq(address(registry.admin()), address(admin));
@@ -47,9 +43,6 @@ contract AssetRegistryTest is Test {
         assertEq(registry.assetCount(), 0);
     }
 
-    // =========================================================================
-    // Create Asset Tests
-    // =========================================================================
 
     function testIssuerCanCreateAsset() public {
         vm.prank(issuer1);
@@ -62,7 +55,6 @@ contract AssetRegistryTest is Test {
         vm.prank(issuer1);
         registry.createAsset(IPFS_HASH_1);
 
-        // Asset ID starts from 1
         assertEq(registry.ownerOf(1), issuer1);
     }
 
@@ -90,7 +82,6 @@ contract AssetRegistryTest is Test {
     }
 
     function testOwnerCanCreateAssetAsIssuer() public {
-        // Owner is automatically an issuer
         registry.createAsset(IPFS_HASH_1);
         assertEq(registry.assetCount(), 1);
     }
@@ -133,9 +124,6 @@ contract AssetRegistryTest is Test {
         assertEq(registry.ownerOf(1), newIssuer);
     }
 
-    // =========================================================================
-    // ERC721 Compliance Tests
-    // =========================================================================
 
     function testBalanceOf() public {
         vm.startPrank(issuer1);
@@ -205,9 +193,6 @@ contract AssetRegistryTest is Test {
         assertEq(registry.getApproved(1), issuer2);
     }
 
-    // =========================================================================
-    // Asset Ownership After Transfer Tests
-    // =========================================================================
 
     function testIPFSHashRemainsAfterTransfer() public {
         vm.prank(issuer1);
@@ -216,7 +201,6 @@ contract AssetRegistryTest is Test {
         vm.prank(issuer1);
         registry.transferFrom(issuer1, nonIssuer, 1);
 
-        // IPFS hash should still be accessible
         assertEq(registry.assetIPFS(1), IPFS_HASH_1);
     }
 
@@ -230,9 +214,6 @@ contract AssetRegistryTest is Test {
         assertEq(registry.ownerOf(1), nonIssuer);
     }
 
-    // =========================================================================
-    // Multiple Assets Tests
-    // =========================================================================
 
     function testCreateManyAssets() public {
         vm.startPrank(issuer1);
@@ -257,9 +238,6 @@ contract AssetRegistryTest is Test {
         assertEq(registry.assetIPFS(2), IPFS_HASH_1);
     }
 
-    // =========================================================================
-    // Fuzz Tests
-    // =========================================================================
 
     function testFuzzCreateAsset(string memory ipfsHash) public {
         vm.prank(issuer1);
@@ -282,9 +260,6 @@ contract AssetRegistryTest is Test {
         assertEq(registry.balanceOf(issuer1), count);
     }
 
-    // =========================================================================
-    // Edge Cases
-    // =========================================================================
 
     function testCreateAssetWithLongIPFSHash() public {
         string memory longHash = "ipfs://QmVeryLongHashThatIsLongerThanUsualButShouldStillWorkCorrectlyAndBeStoredProperly1234567890";
@@ -296,7 +271,6 @@ contract AssetRegistryTest is Test {
     }
 
     function testQueryNonExistentAssetIPFS() public view {
-        // Should return empty string for non-existent asset
         assertEq(registry.assetIPFS(999), "");
     }
 
@@ -305,27 +279,19 @@ contract AssetRegistryTest is Test {
         registry.ownerOf(999);
     }
 
-    // =========================================================================
-    // Integration with Admin Contract
-    // =========================================================================
 
     function testIssuerStatusChangesAffectAssetCreation() public {
-        // issuer1 can create
         vm.prank(issuer1);
         registry.createAsset(IPFS_HASH_1);
 
-        // Remove issuer status
         admin.removeIssuer(issuer1);
 
-        // issuer1 can no longer create
         vm.prank(issuer1);
         vm.expectRevert("Not issuer");
         registry.createAsset(IPFS_HASH_2);
 
-        // Re-add issuer status
         admin.addIssuer(issuer1);
 
-        // issuer1 can create again
         vm.prank(issuer1);
         registry.createAsset(IPFS_HASH_2);
 

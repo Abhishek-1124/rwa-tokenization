@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
 import "forge-std/Test.sol";
@@ -29,23 +28,18 @@ contract IncomeDistributorTest is Test {
     }
 
     function testDepositBeforeTransferDoesNotLeakToBuyer() public {
-        // Create asset and fractions
         vm.startPrank(issuer);
         registry.createAsset("ipfs://meta");
         token.mintFractions(1, 1000, issuer);
 
-        // Deposit 10 ETH income while issuer holds all shares
         dist.depositIncome{value: 10 ether}(1);
 
-        // Transfer 100 shares to buyer AFTER deposit
         token.safeTransferFrom(issuer, buyer, 1, 100, "");
         vm.stopPrank();
 
-        // Buyer should NOT be able to claim from the pre-transfer deposit
         uint256 buyerPending = dist.pending(buyer, 1);
         assertEq(buyerPending, 0);
 
-        // Issuer should be able to claim full 10 ETH (credited on transfer hook)
         uint256 issuerPending = dist.pending(issuer, 1);
         assertEq(issuerPending, 10 ether);
 
@@ -62,7 +56,6 @@ contract IncomeDistributorTest is Test {
         token.safeTransferFrom(issuer, buyer, 1, 200, "");
         vm.stopPrank();
 
-        // Deposit 10 ETH income: issuer has 800 shares, buyer has 200 shares
         vm.prank(issuer);
         dist.depositIncome{value: 10 ether}(1);
 

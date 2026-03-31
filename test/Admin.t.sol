@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
 import "forge-std/Test.sol";
@@ -14,7 +13,6 @@ contract AdminTest is Test {
     address manager2 = address(0x4);
     address nonOwner = address(0x5);
 
-    // Events to test
     event IssuerAdded(address indexed issuer);
     event IssuerRemoved(address indexed issuer);
     event ManagerAdded(address indexed manager);
@@ -28,9 +26,6 @@ contract AdminTest is Test {
         admin = new Admin();
     }
 
-    // =========================================================================
-    // Constructor Tests
-    // =========================================================================
 
     function testConstructorSetsOwner() public view {
         assertEq(admin.owner(), owner);
@@ -44,9 +39,6 @@ contract AdminTest is Test {
         assertTrue(admin.isManager(owner));
     }
 
-    // =========================================================================
-    // Issuer Management Tests
-    // =========================================================================
 
     function testAddIssuer() public {
         admin.addIssuer(issuer1);
@@ -117,9 +109,6 @@ contract AdminTest is Test {
         assertTrue(admin.isIssuer(issuer1));
     }
 
-    // =========================================================================
-    // Manager Management Tests
-    // =========================================================================
 
     function testAddManager() public {
         admin.addManager(manager1);
@@ -190,9 +179,6 @@ contract AdminTest is Test {
         assertTrue(admin.isManager(manager1));
     }
 
-    // =========================================================================
-    // Token-Specific Manager Tests
-    // =========================================================================
 
     function testSetManagerForToken() public {
         admin.setManagerForToken(manager1, 1, true);
@@ -242,9 +228,6 @@ contract AdminTest is Test {
         assertTrue(admin.managerForToken(manager2, 1));
     }
 
-    // =========================================================================
-    // isManagerForToken View Function Tests
-    // =========================================================================
 
     function testIsManagerForTokenReturnsTrueForTokenSpecificManager() public {
         admin.setManagerForToken(manager1, 1, true);
@@ -253,7 +236,6 @@ contract AdminTest is Test {
 
     function testIsManagerForTokenReturnsTrueForGlobalManager() public {
         admin.addManager(manager1);
-        // Global manager should be manager for ANY token
         assertTrue(admin.isManagerForToken(manager1, 1));
         assertTrue(admin.isManagerForToken(manager1, 2));
         assertTrue(admin.isManagerForToken(manager1, 999));
@@ -264,25 +246,16 @@ contract AdminTest is Test {
     }
 
     function testIsManagerForTokenWithBothGlobalAndTokenSpecific() public {
-        // Add as global manager
         admin.addManager(manager1);
-        // Also add for specific token
         admin.setManagerForToken(manager1, 1, true);
 
-        // Should still return true
         assertTrue(admin.isManagerForToken(manager1, 1));
 
-        // Remove from global
         admin.removeManager(manager1);
-        // Should still be true for token 1 (token-specific)
         assertTrue(admin.isManagerForToken(manager1, 1));
-        // But false for other tokens
         assertFalse(admin.isManagerForToken(manager1, 2));
     }
 
-    // =========================================================================
-    // Marketplace Pause Tests
-    // =========================================================================
 
     function testMarketplaceNotPausedByDefault() public view {
         assertFalse(admin.marketplacePaused());
@@ -332,9 +305,6 @@ contract AdminTest is Test {
         assertTrue(admin.marketplacePaused());
     }
 
-    // =========================================================================
-    // Ownership Transfer Tests
-    // =========================================================================
 
     function testTransferOwnership() public {
         address newOwner = address(0x100);
@@ -378,9 +348,6 @@ contract AdminTest is Test {
         admin.addIssuer(issuer1);
     }
 
-    // =========================================================================
-    // Multiple Roles Tests
-    // =========================================================================
 
     function testAddressCanBeBothIssuerAndManager() public {
         admin.addIssuer(issuer1);
@@ -410,9 +377,6 @@ contract AdminTest is Test {
         assertFalse(admin.isManager(issuer1));
     }
 
-    // =========================================================================
-    // Fuzz Tests
-    // =========================================================================
 
     function testFuzzAddIssuer(address _issuer) public {
         vm.assume(_issuer != address(0));
@@ -445,18 +409,13 @@ contract AdminTest is Test {
         assertEq(admin.owner(), _newOwner);
     }
 
-    // =========================================================================
-    // Edge Cases
-    // =========================================================================
 
     function testOwnerCannotAddSelfAsIssuerAgain() public {
-        // Owner is already issuer from constructor
         vm.expectRevert("Already issuer");
         admin.addIssuer(owner);
     }
 
     function testOwnerCannotAddSelfAsManagerAgain() public {
-        // Owner is already manager from constructor
         vm.expectRevert("Already manager");
         admin.addManager(owner);
     }

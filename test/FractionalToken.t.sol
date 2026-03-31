@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
 import "forge-std/Test.sol";
@@ -17,21 +16,16 @@ contract FractionalTokenTest is Test {
     uint256 constant SHARES_100 = 100;
 
     function setUp() public {
-        token = new FractionalToken();
+        address adminAddress = address(0x123); // Replace with actual admin contract address
+        address registryAddress = address(0x456); // Replace with actual registry contract address
+        token = new FractionalToken(adminAddress, registryAddress);
     }
 
-    // =========================================================================
-    // Constructor Tests
-    // =========================================================================
 
     function testConstructorSetsURI() public view {
-        // URI is empty string as per contract
         assertEq(token.uri(1), "");
     }
 
-    // =========================================================================
-    // Mint Fractions Tests
-    // =========================================================================
 
     function testMintFractions() public {
         token.mintFractions(ASSET_ID_1, SHARES_1000, owner1);
@@ -83,9 +77,6 @@ contract FractionalTokenTest is Test {
         assertEq(token.balanceOf(owner1, ASSET_ID_1), largeAmount);
     }
 
-    // =========================================================================
-    // ERC1155 Transfer Tests
-    // =========================================================================
 
     function testSafeTransferFrom() public {
         token.mintFractions(ASSET_ID_1, SHARES_1000, owner1);
@@ -121,13 +112,9 @@ contract FractionalTokenTest is Test {
         vm.prank(owner1);
         token.safeTransferFrom(owner1, recipient, ASSET_ID_1, 500, "");
 
-        // Total shares should remain the same
         assertEq(token.totalShares(ASSET_ID_1), SHARES_1000);
     }
 
-    // =========================================================================
-    // Batch Transfer Tests
-    // =========================================================================
 
     function testSafeBatchTransferFrom() public {
         token.mintFractions(ASSET_ID_1, SHARES_1000, owner1);
@@ -150,9 +137,6 @@ contract FractionalTokenTest is Test {
         assertEq(token.balanceOf(recipient, ASSET_ID_2), 50);
     }
 
-    // =========================================================================
-    // Approval Tests
-    // =========================================================================
 
     function testSetApprovalForAll() public {
         token.mintFractions(ASSET_ID_1, SHARES_1000, owner1);
@@ -195,9 +179,6 @@ contract FractionalTokenTest is Test {
         token.safeTransferFrom(owner1, recipient, ASSET_ID_1, 500, "");
     }
 
-    // =========================================================================
-    // Balance Of Batch Tests
-    // =========================================================================
 
     function testBalanceOfBatch() public {
         token.mintFractions(ASSET_ID_1, SHARES_1000, owner1);
@@ -217,13 +198,8 @@ contract FractionalTokenTest is Test {
         assertEq(balances[1], SHARES_100);
     }
 
-    // =========================================================================
-    // Zero Amount Tests
-    // =========================================================================
 
     function testCannotMintZeroShares() public {
-        // Minting zero shares doesn't make sense but contract allows it
-        // This tests the current behavior - should be 0
         token.mintFractions(ASSET_ID_1, 0, owner1);
         assertEq(token.totalShares(ASSET_ID_1), 0);
         assertEq(token.balanceOf(owner1, ASSET_ID_1), 0);
@@ -235,14 +211,10 @@ contract FractionalTokenTest is Test {
         vm.prank(owner1);
         token.safeTransferFrom(owner1, recipient, ASSET_ID_1, 0, "");
 
-        // Balances should remain unchanged
         assertEq(token.balanceOf(owner1, ASSET_ID_1), SHARES_1000);
         assertEq(token.balanceOf(recipient, ASSET_ID_1), 0);
     }
 
-    // =========================================================================
-    // Fuzz Tests
-    // =========================================================================
 
     function testFuzzMintFractions(uint256 assetId, uint256 shares, address _owner) public {
         vm.assume(_owner != address(0));
@@ -267,9 +239,6 @@ contract FractionalTokenTest is Test {
         assertEq(token.balanceOf(recipient, ASSET_ID_1), transferAmount);
     }
 
-    // =========================================================================
-    // Edge Cases
-    // =========================================================================
 
     function testMintToZeroAddressReverts() public {
         vm.expectRevert();
@@ -295,15 +264,12 @@ contract FractionalTokenTest is Test {
     function testMultipleTransfersOfSameAsset() public {
         token.mintFractions(ASSET_ID_1, SHARES_1000, owner1);
 
-        // First transfer
         vm.prank(owner1);
         token.safeTransferFrom(owner1, owner2, ASSET_ID_1, 300, "");
 
-        // Second transfer
         vm.prank(owner1);
         token.safeTransferFrom(owner1, recipient, ASSET_ID_1, 200, "");
 
-        // Third transfer (owner2 to recipient)
         vm.prank(owner2);
         token.safeTransferFrom(owner2, recipient, ASSET_ID_1, 100, "");
 
@@ -311,13 +277,9 @@ contract FractionalTokenTest is Test {
         assertEq(token.balanceOf(owner2, ASSET_ID_1), 200);
         assertEq(token.balanceOf(recipient, ASSET_ID_1), 300);
 
-        // Total should still be 1000
         assertEq(token.totalShares(ASSET_ID_1), SHARES_1000);
     }
 
-    // =========================================================================
-    // URI Tests
-    // =========================================================================
 
     function testURIIsEmpty() public view {
         assertEq(token.uri(ASSET_ID_1), "");
@@ -325,17 +287,12 @@ contract FractionalTokenTest is Test {
         assertEq(token.uri(999), "");
     }
 
-    // =========================================================================
-    // Interface Support Tests
-    // =========================================================================
 
     function testSupportsERC1155Interface() public view {
-        // ERC1155 interface ID
         assertTrue(token.supportsInterface(0xd9b67a26));
     }
 
     function testSupportsERC165Interface() public view {
-        // ERC165 interface ID
         assertTrue(token.supportsInterface(0x01ffc9a7));
     }
 }

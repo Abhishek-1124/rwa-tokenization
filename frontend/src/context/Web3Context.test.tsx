@@ -3,6 +3,15 @@ import { render, screen, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { WalletProvider, useWallet } from './Web3Context';
 
+vi.mock('ethers', () => ({
+  ethers: {
+    BrowserProvider: vi.fn().mockImplementation(() => ({
+      getNetwork: vi.fn().mockResolvedValue({ chainId: 1n }),
+      send: vi.fn().mockResolvedValue(null),
+    })),
+  },
+}));
+
 // Test component to access context
 const TestComponent = () => {
   const { address, isConnected, connectWallet, disconnectWallet } = useWallet();

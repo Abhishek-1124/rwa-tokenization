@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
 import "forge-std/Test.sol";
@@ -18,7 +17,6 @@ contract RWATest is Test {
         registry = new AssetRegistry(address(admin));
         token = new FractionalToken(address(admin), address(registry));
 
-        // test contract is Admin owner by default, so it can add issuers
         admin.addIssuer(issuer);
     }
 
