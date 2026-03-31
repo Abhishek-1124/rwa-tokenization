@@ -1,53 +1,175 @@
-# RWA Tokenization Platform
+# RWA // NEXUS - Real World Asset Tokenization Platform
 
-A Real-World Asset (RWA) tokenization platform built on Hedera Testnet. This platform allows tokenizing real-world assets as NFTs and creating fractional ownership through ERC1155 tokens.
+[![Build Status](https://github.com/Abhishek-1124/RWATokenization/actions/workflows/ci.yml/badge.svg)](https://github.com/Abhishek-1124/RWATokenization/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Solidity](https://img.shields.io/badge/Solidity-^0.8.0-blue.svg)](https://soliditylang.org/)
+[![React](https://img.shields.io/badge/React-18.0+-blue.svg)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 
-## Project Structure
+A comprehensive Real World Asset (RWA) tokenization platform built on Hedera Hashgraph, enabling fractional ownership of physical assets through blockchain technology.
 
+## 🚀 Features
+
+- **Asset Registry**: Register and manage real-world assets on-chain
+- **Fractional Tokenization**: Create ERC-20 tokens representing asset fractions
+- **Decentralized Marketplace**: Trade fractional tokens with on-chain transactions
+- **Admin Dashboard**: Manage roles, transfer ownership, and oversee platform operations
+- **Hedera Integration**: Deployed on Hedera Testnet for fast, secure transactions
+- **MetaMask Integration**: Seamless wallet connectivity for users
+
+## 🏗️ Architecture
+
+### Smart Contracts (Solidity)
+- **Admin.sol**: Platform administration and role management
+- **AssetRegistry.sol**: Asset registration and metadata management
+- **FractionalToken.sol**: ERC-20 implementation for asset fractions
+- **Marketplace.sol**: On-chain trading functionality
+- **HtsAdapter.sol**: Hedera Token Service integration
+- **IncomeDistributor.sol**: Revenue distribution mechanisms
+
+### Frontend (React + TypeScript)
+- **Admin Dashboard**: Role management and ownership transfer
+- **Marketplace**: Browse and trade fractional tokens
+- **Issuer Portal**: Register new assets and create tokens
+- **Wallet Integration**: MetaMask connection and transaction handling
+
+## 🛠️ Tech Stack
+
+- **Blockchain**: Hedera Hashgraph (Testnet)
+- **Smart Contracts**: Solidity ^0.8.0, OpenZeppelin
+- **Frontend**: React 18, TypeScript, Vite
+- **Styling**: CSS Modules, Tailwind CSS
+- **Testing**: Foundry (Solidity), Vitest (Frontend)
+- **Deployment**: Foundry scripts
+
+## 📋 Prerequisites
+
+- Node.js 18+
+- Foundry (for Solidity development)
+- MetaMask wallet
+- Git
+
+## 🚀 Quick Start
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/Abhishek-1124/RWATokenization.git
+cd RWATokenization
 ```
-RAW-Tokenization/
-├── src/                    # Smart contracts (Solidity)
-│   ├── Admin.sol          # Role management & access control
-│   ├── AssetRegistry.sol  # RWA asset registration (ERC721)
-│   ├── FractionalToken.sol # Fractional tokens (ERC1155)
-│   └── Marketplace.sol    # Trading fractional tokens
-├── frontend/              # React frontend application
-│   └── src/
-│       ├── components/    # UI components
-│       ├── config/        # Contract addresses & auth config
-│       ├── context/       # React contexts (Web3, Auth)
-│       ├── hooks/         # Custom hooks
-│       └── pages/         # Page components
-├── script/                # Deployment scripts
-├── test/                  # Smart contract tests
-└── .env                   # Environment configuration
+
+### 2. Install Dependencies
+
+#### Frontend
+```bash
+cd frontend
+npm install
 ```
 
-## Smart Contracts
+#### Smart Contracts
+```bash
+foundryup  # Install Foundry if not already installed
+forge install
+```
 
-| Contract | Description |
-|----------|-------------|
-| **Admin.sol** | Manages roles (Owner, Issuer, Manager) and marketplace pause |
-| **AssetRegistry.sol** | ERC721 contract for registering RWA assets |
-| **FractionalToken.sol** | ERC1155 contract for fractional ownership |
-| **Marketplace.sol** | Buy/sell fractional tokens |
+### 3. Environment Setup
 
-## Roles & Permissions
+Create `.env` file in frontend directory:
+```env
+VITE_HEDERA_NETWORK=testnet
+VITE_HEDERA_RPC_URL=https://testnet.hashio.io/api
+```
 
-| Role | Permissions |
-|------|-------------|
-| **Owner** | Add/remove issuers, Add/remove managers, Pause marketplace, Transfer ownership |
-| **Issuer** | Create new RWA assets in AssetRegistry |
-| **Manager** | Manage specific tokens (for royalty distribution) |
+### 4. Deploy Contracts (Optional - Already deployed)
+```bash
+forge script script/Deploy.s.sol --rpc-url https://testnet.hashio.io/api --broadcast
+```
 
-## Getting Started
+### 5. Start Development Server
+```bash
+cd frontend
+npm run dev
+```
 
-### Prerequisites
+Visit `http://localhost:5173` to access the application.
 
-- [Node.js](https://nodejs.org/) (v18+)
-- [Foundry](https://book.getfoundry.sh/getting-started/installation)
-- [MetaMask](https://metamask.io/) browser extension
-- Hedera Testnet HBAR (get from [Hedera Faucet](https://portal.hedera.com/faucet))
+## 🔧 Configuration
+
+### Contract Addresses
+
+Update `frontend/src/config/contracts.ts` with deployed contract addresses:
+
+```typescript
+export const CONTRACT_ADDRESSES = {
+  Admin: "0x...",
+  AssetRegistry: "0x...",
+  FractionalToken: "0x...",
+  Marketplace: "0x...",
+  // ... other contracts
+};
+```
+
+## 🧪 Testing
+
+### Smart Contracts
+```bash
+forge test
+```
+
+### Frontend
+```bash
+cd frontend
+npm test
+```
+
+## 📚 Usage Guide
+
+### For Asset Issuers
+1. Connect MetaMask wallet
+2. Register asset in the Issuer portal
+3. Create fractional tokens
+4. List tokens on marketplace
+
+### For Investors
+1. Connect MetaMask wallet
+2. Browse marketplace
+3. Purchase fractional tokens
+4. Track asset performance
+
+### For Admins
+1. Access admin dashboard
+2. Manage user roles
+3. Transfer ownership if needed
+4. Monitor platform activity
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 📞 Support
+
+For questions or support:
+- Open an issue on GitHub
+- Check the [documentation](./docs/) folder
+- Review the [hackathon report](./docs/HACKATHON_REPORT.md)
+
+## 🙏 Acknowledgments
+
+- Built for hackathons and real-world asset tokenization
+- Powered by Hedera Hashgraph
+- Inspired by decentralized finance innovations
+
+---
+
+**Demo**: [Live Application](https://your-deployed-url.com)  
+**Contracts**: [Hedera Explorer](https://hashscan.io/testnet)
 
 ### 1. Clone & Install
 
