@@ -52,7 +52,7 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
     }
   };
 
-  const connectWallet = async () => {
+  const connectWallet = React.useCallback(async () => {
     try {
       if (!window.ethereum) {
         throw new Error('No wallet found. Please install MetaMask.');

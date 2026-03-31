@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import { useAdminContract } from './useAdminContract';
 import { Contract } from 'ethers';
-// ...existing code...
 
 describe('useAdminContract', () => {
   const mockOwnerAddress = '0xOwnerAddress123';
