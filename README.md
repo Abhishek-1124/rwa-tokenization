@@ -127,16 +127,16 @@ npm test
 1. Connect MetaMask wallet
 2. Register asset in the Issuer portal
 3. Create fractional tokens
-4. List tokens on marketplace
+4. List tokens on the marketplace
 
 ### For Investors
 1. Connect MetaMask wallet
-2. Browse marketplace
+2. Browse the marketplace
 3. Purchase fractional tokens
 4. Track asset performance
 
 ### For Admins
-1. Access admin dashboard
+1. Access the admin dashboard
 2. Manage user roles
 3. Transfer ownership if needed
 4. Monitor platform activity
@@ -200,7 +200,7 @@ ADMIN_ADDR="0x<your-wallet-address>"
 
 **How to get your private key from MetaMask:**
 1. Open MetaMask extension
-2. Click three dots (⋮) next to account name
+2. Click three dots (⋮) next to the account name
 3. Click "Account details"
 4. Click "Show private key"
 5. Enter your MetaMask password
@@ -302,7 +302,7 @@ export const ADMIN_CREDENTIALS = {
 ## MetaMask Setup for Hedera Testnet
 
 1. Open MetaMask
-2. Click network dropdown → "Add network"
+2. Click the network dropdown → "Add network"
 3. Click "Add a network manually"
 4. Enter:
    - **Network Name:** Hedera Testnet
